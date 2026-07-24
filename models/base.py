@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 import torch 
 from torch import Tensor, nn
 
-class RecurrentCell(nn.Module):
+class RecurrentCell(nn.Module, ABC):
 
     @abstractmethod
     def forward(self, x_t: Tensor, hidden_state: Tensor | tuple[Tensor, Tensor]) -> tuple[Tensor, Tensor]:
