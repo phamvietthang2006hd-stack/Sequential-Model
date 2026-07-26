@@ -1,9 +1,11 @@
 import torch
-from torch import nn, Tensor
+from torch import Tensor, nn
 
 from .base import RecurrentCell
 
+
 class RNNCell(RecurrentCell):
+    """Vanilla tanh RNN cell."""
 
     def __init__(self, input_dim: int, hidden_dim: int):
         super().__init__()
@@ -16,17 +18,15 @@ class RNNCell(RecurrentCell):
     def forward(self, x_t: Tensor, state: Tensor) -> tuple[Tensor, Tensor]:
         """
         Compute one RNN transition
-        @params:
-            x_t: input vector, shape (batch_size, input_dim)
-            state: previous state, shape (batch_size, hidden_dim)
-
-        return:
-            h_t: Current state, shape: (batch_size, hidden_dim)
-            new_state: shape (batch_size, hidden_dim)
+        Args:
+            x_t: Input vector, shape ``(batch_size, input_dim)``.
+            state: Previous hidden state, shape ``(batch_size, hidden_dim)``.
         """
         h_t = torch.tanh(self.input_layer(x_t) + self.hidden_layer(state))
         new_state = h_t
         return h_t, new_state
 
-    def init_state(self, batch_size: int, device: torch.device) -> Tensor:
-        return torch.zeros(batch_size, self.hidden_dim, device=device)
+    def init_state(
+        self, batch_size: int, device: torch.device, dtype: torch.dtype
+    ) -> Tensor:
+        return torch.zeros(batch_size, self.hidden_dim, device=device, dtype=dtype)
