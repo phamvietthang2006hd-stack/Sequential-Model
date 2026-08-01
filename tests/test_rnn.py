@@ -14,6 +14,7 @@ def test_rnn_cell_forward() -> None:
     state = cell.init_state(batch_size=BATCH_SIZE, device=x.device)
     h, new_state = cell(x, state)
 
+    assert h.shape == (BATCH_SIZE, HIDDEN_DIM)
     assert new_state.shape == (BATCH_SIZE, HIDDEN_DIM)
 
 def test_rnn_sequence_forward() -> None:

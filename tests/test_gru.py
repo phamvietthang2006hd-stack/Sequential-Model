@@ -14,6 +14,7 @@ def test_gru_cell_forward() -> None:
 
     h, new_state = cell.forward(x, state)
 
+    assert h.shape == (batch_size, hidden_dim)
     assert new_state.shape == (batch_size, hidden_dim)
 
 def test_gru_sequence_forward() -> None:
