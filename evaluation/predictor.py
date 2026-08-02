@@ -8,7 +8,7 @@ class Predictor:
         self.model = model 
         self.device = device
 
-    @torch.no_grad
+    @torch.no_grad()
     def predict(self, dataloader: DataLoader) -> tuple[Tensor, Tensor]:
         self.model.eval()
         predictor = []
